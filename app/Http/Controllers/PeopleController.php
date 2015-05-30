@@ -77,11 +77,16 @@ class PeopleController extends Controller {
 				$btnHTML = '关注';
 				$class = 'follow-btn';
 			}
+
+			$postcards = DB::select('select path from postcards
+										  where ownuser = "'.$id.'"');
 			$nickname = $results[0]->name;
-			return view('pages.people', ['title' => $id,
+			return view('pages.people', ['auth' => $auth,
+										 'title' => $id,
 										 'nickname' => $nickname,
 										 'btnHTML' => $btnHTML,
-										 'class' =>$class]);
+										 'class' =>$class,
+										 'postcards' => $postcards]);
 		}
 	}
 
@@ -104,7 +109,7 @@ class PeopleController extends Controller {
 	 */
 	public function update($id)
 	{
-		echo "a";
+		//
 	}
 
 	/**
@@ -115,7 +120,7 @@ class PeopleController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		echo "a";
+		//
 	}
 
 }

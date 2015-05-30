@@ -3,4 +3,9 @@
 
 @section('content')
     <a href="{{ URL('upload') }}">发布明信片</a>
+    {!! $news !!}
+@stop
+
+@section('jspath')
+home.js
 @stop

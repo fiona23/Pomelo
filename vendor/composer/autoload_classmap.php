@@ -6,12 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddPostcardsCol' => $baseDir . '/database/migrations/2015_05_30_092435_add_postcards_col.php',
     'CreateFollowersTable' => $baseDir . '/database/migrations/2015_05_27_114204_create_followers_table.php',
-    'CreateFollowsTable' => $baseDir . '/database/migrations/2015_05_27_114200_create_follows_table.php',
+    'CreateNewsTable' => $baseDir . '/database/migrations/2015_05_30_111650_create_news_table.php',
     'CreatePagesTable' => $baseDir . '/database/migrations/2015_05_20_130329_create_pages_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePostcardsTable' => $baseDir . '/database/migrations/2015_05_27_112926_create_postcards_table.php',
-    'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+    'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000001_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator/Facade.php',

@@ -4,12 +4,21 @@
 @if(Session::has('success'))
   <div class="alert-box success">
     <p>{!! Session::get('success') !!}</p>
-    <img src="{!! Session::get('path') !!}" alt="柚子肉 交换明信片" class="upload-postcard">
+    <a href="{{ url('/') }}">回到首页</a>
+    <a href="{{ url('upload') }}">继续上传</a>
   </div>
-@endif
-  <form action="{{ URL('upload/add') }}" method="post" enctype="multipart/form-data">
+@else
+  <form id="upload-form" action="{{ URL('upload') }}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    <input type="file" name="postcard">
-    <input type="submit">
+    <input type="file" name="postcard[]" accept="image/jpg,image/jpeg,image/bmp,image/gif,image/png," multiple>
+    <span id="count"></span>
+    <ul id="uploaded-postcards"></ul>
+    <input type="submit" value="保存">
+    <a href="{{ url('upload') }}">取消</a>
   </form>
-@endsection
+@endif
+@stop
+
+@section('jspath')
+upload.js
+@stop

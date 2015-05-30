@@ -24,10 +24,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
 });
 
 Route::get('upload', 'UploadController@index');
-
-Route::post('upload/add',[ 
-        'as' => 'addentry', 'uses' => 'UploadController@store']);
-
+Route::post('upload', 'UploadController@index');
+Route::post('upload/add', 'UploadController@store');
 Route::resource('people', 'PeopleController');
 
 Route::filter('csrf', function()

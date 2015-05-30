@@ -1,0 +1,7 @@
+#uploaded-postcards > li{
+    display: inline-block;
+    width: 168px;
+    height: 168px;
+    box-sizing: border-box;
+    margin: 0 10px 0 10px;
+}

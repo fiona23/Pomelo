@@ -20,6 +20,7 @@ class CreatePostcardsTable extends Migration {
 			$table->string('getuser');
 			$table->string('path');
 		});
+
 	}
 
 	/**
