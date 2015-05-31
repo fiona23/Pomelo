@@ -10,7 +10,9 @@
 @else
   <form id="upload-form" action="{{ URL('upload') }}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    <input type="file" name="postcard[]" accept="image/jpg,image/jpeg,image/bmp,image/gif,image/png," multiple>
+    <div class="file-input">
+          <input type="file" name="postcard[]" accept="image/jpg,image/jpeg,image/bmp,image/gif,image/png," multiple>
+    </div>
     <span id="count"></span>
     <ul id="uploaded-postcards"></ul>
     <input type="submit" value="保存">

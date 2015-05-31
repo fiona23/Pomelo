@@ -2,6 +2,8 @@
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Auth;
 
 class Handler extends ExceptionHandler {
 
@@ -36,6 +38,15 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
+		if (isset(Auth::user()->name)) {
+			$auth = Auth::user()->name;
+		} else {
+			$auth = '';
+		}
+		if($e instanceof NotFoundHttpException)
+		    {
+		        return response()->view('errors.404', ['title' => 404, 'auth' => $auth], 404);
+		    }
 		return parent::render($request, $e);
 	}
 

@@ -11,17 +11,23 @@
 		</ul>
 	</div>
 @endif
-
-<form role="form" method="POST" action="{{ url('/auth/login') }}">
-	<input type="hidden" name="_token" value="{{ csrf_token() }}">
-	<label>E-Mail Address</label>
-	<input type="email" name="email" value="{{ old('email') }}">
-	<label>Password</label>
-	<input type="password" name="password">
-	<label>
-		<input type="checkbox" name="remember"> Remember Me
-	</label>
-	<button type="submit">Login</button>
-	<a href="{{ url('/password/email') }}">Forgot Your Password?</a>
-</form>
+<div class="content-wrapper">
+	<h2 class="page-title">登陆柚子</h2>
+	<form role="form" method="POST" action="{{ url('/auth/login') }}">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		<div class="input-block">
+			<label>邮箱</label>
+			<input class="input-box" type="email" name="email" value="{{ old('email') }}">
+		</div>
+		<div class="input-block">
+			<label>密码</label>
+			<input class="input-box" type="password" name="password">
+		</div>
+		<label class="remember-login">
+			<input type="checkbox" name="remember"> 下次自动登陆|
+			<a href="{{ url('/password/email') }}">忘记密码?</a>
+		</label>
+		<button class="submit-btn" type="submit">登陆</button>
+	</form>
+</div>
 @endsection

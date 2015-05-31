@@ -13,18 +13,27 @@
 	</div>
 @endif
 
-<form role="form" method="POST" action="{{ url('/auth/register') }}">
-	<input type="hidden" name="_token" value="{{ csrf_token() }}">
-	<label >Name</label>
-	<input type="text" name="name" value="{{ old('name') }}">
-	<label>E-Mail Address</label>
-	<input type="email" name="email" value="{{ old('email') }}">
-	<label>Password</label>
-	<input type="password" name="password">
-	<label>Confirm Password</label>
-	<input type="password" name="password_confirmation">
-<button type="submit">
-	Register
-</button>
-</form>
+<div class="content-wrapper">
+	<form role="form" method="POST" action="{{ url('/auth/register') }}">
+		<h2 class="page-title">注册</h2>
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		<div class="input-block">
+			<label >用户名</label>
+			<input class="input-box" type="text" name="name" value="{{ old('name') }}">
+		</div>
+		<div class="input-block">
+			<label>邮箱</label>
+			<input class="input-box" type="email" name="email" value="{{ old('email') }}">
+		</div>
+		<div class="input-block">
+			<label>密码</label>
+			<input class="input-box" type="password" name="password">
+		</div>
+		<div class="input-block">
+			<label>再次输入</label>
+			<input class="input-box" type="password" name="password_confirmation">
+		</div>
+		<button class="submit-btn" type="submit">注册</button>
+	</form>
+</div>
 @endsection

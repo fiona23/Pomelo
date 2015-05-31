@@ -16,7 +16,7 @@ class PeopleController extends Controller {
 	 */
 	public function index()
 	{	
-		return view('errors.404', ['title' => '404']);
+		return view('errors.404', ['title' => '404', 'auth' => Auth::user()->name]);
 	}
 
 	/**
@@ -65,7 +65,7 @@ class PeopleController extends Controller {
 		$results = DB::select('select name from users
 								where name = :username',  ['username' => $id]);
 		if (!$results) {
-			return view('errors.404', ['title' => '404']);
+			return view('errors.404', ['title' => '404', 'auth' => $auth]);
 		} else {
 			$followResult = DB::select('select * from followers
 										where user1 = "'.$id.'"
@@ -78,7 +78,7 @@ class PeopleController extends Controller {
 				$class = 'follow-btn';
 			}
 
-			$postcards = DB::select('select path from postcards
+			$postcards = DB::select('select cutpath from postcards
 										  where ownuser = "'.$id.'"');
 			$nickname = $results[0]->name;
 			return view('pages.people', ['auth' => $auth,

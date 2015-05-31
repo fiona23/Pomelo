@@ -84,8 +84,9 @@ class UploadController extends Controller {
 	 	    $imgCut = Image::make($postcard->path);
 	 	    $imgCut->fit(168);
 	 	    $imgCut->save($destinationPath.'/cut'.$fileName);
+	 	    $postcard->cutpath = $destinationPath.'/cut'.$fileName;
 	 	    if ($postcard->save()) {
-	 	    		$img = view('_block.upload_block', ['src' => $destinationPath.'/cut'.$fileName])->render();
+	 	    		$img = view('_block.upload_block', ['src' => $postcard->cutpath])->render();
 	 	    		$obj = new \stdClass();
 					$obj->img = $img;
 					$obj->count = $count;

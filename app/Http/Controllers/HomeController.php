@@ -35,7 +35,7 @@ class HomeController extends Controller {
 		//得到当前登录用户的注册关注账户
 		$follows = DB::select('select user1 from followers
 							  where user2 = "'.$auth.'"');
-		if (isset($follows)) {
+		if (count($follows) != 0) {
 			$followsArray = array();
 			$followsString = '';
 			foreach ($follows as $follow) {
@@ -60,10 +60,17 @@ class HomeController extends Controller {
 				}
 				$allNews .= '<div class="status-item">'.$eachNews.'</div>';
 			}
-			return view('home', ['title' => $auth,
+			return view('home', ['title' => '柚子',
 								 'auth' => $auth,
 								 //'follow' => $follow,
 								 'news' => $allNews
+								 ]);
+		} else {
+			//新注册用户没有关注任何人
+			return view('home', ['title' => '柚子',
+								 'auth' => $auth,
+								 //'follow' => $follow,
+								 'news' => '$allNews'
 								 ]);
 		}
 	}
