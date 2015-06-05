@@ -27,7 +27,22 @@ Route::get('upload', 'UploadController@index');
 Route::post('upload', 'UploadController@index');
 Route::post('upload/add', 'UploadController@store');
 Route::resource('people', 'PeopleController');
+//嵌套资源控制器 处理想要交换的明信片
+Route::resource('people.exchange', 'ExchangeController');
+//保存评论
+Route::post('comment/store', 'PostcardCommentController@store');
+//交换
+Route::post('exchange/sure', 'ExchangeController@store');
 
+Route::post('exchange/showList', 'ExchangeController@showList');
+//确认交换
+Route::post('exchange/choose', 'ExchangeController@choose');
+//
+Route::get('exchange/sure', 'ExchangeController@sure');
+//
+Route::get('account', 'UserController@index');
+Route::post('account', 'UserController@store');
+//处理ajax
 Route::filter('csrf', function()
 {
    $token = Request::header('X-CSRF-Token') ?: Input::get('_token');

@@ -3,11 +3,15 @@
 @link-green: #078401;
 @nav-height: 50px;
 
+
 *{
     padding: 0;
     margin: 0;
 }
 
+/*body, html {
+    height: 100%;
+}*/
 a {
     color: @link-green;
     text-decoration: none;
@@ -19,11 +23,42 @@ ul {
     list-style: none;
 }
 
+textarea {
+    resize: none;
+    outline: none;
+}
+
+.content-wrapper {
+    width: 980px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+section {
+    width: 600px;
+}
+
+.fleft {
+    float: left;
+}
+/*minx*/
 .img-bordered {
     border: 1px solid @logo-color;
     border-radius: 5px;
 }
 
+.css-transition(@pro:all, @time:1s) {
+    transition: @pro @time;
+    -moz-transition: @pro @time;
+    -webkit-transition: @pro @time; 
+    -o-transition: @pro @time;
+}
+
+.cut-size {
+    width: 168px;
+    height: 168px;
+}
+/*minx end*/
 .page-title {
     color: @link-green;
     margin: 30px 0 30px 0;
@@ -149,15 +184,45 @@ header {
 }
 
 /*people*/
-.content-wrapper {
-    width: 980px;
-    margin: 0 auto;
+.postcards-wrapper {
+    overflow: hidden;
 }
-
+.each-postcard {
+    .cut-size;
+    .img-bordered;
+}
 .want-exchange-postcards {
     .img-bordered;
+    .cut-size;
     float: left;
     margin: 20px 13px 0px 13px;
+    position: relative;
+    overflow: hidden;
+    &:hover .exchange-btn {
+        //display: block;
+        opacity: 1;
+    }
+}
+
+.overlay {
+    position: absolute;
+    z-index: 2;
+    .cut-size;
+    background-color: @logo-color;
+    opacity: 0;
+    .css-transition(opacity, 0.4s);
+    &:hover {
+        opacity: 0.3;
+    }
+    
+}
+
+.exchange-btn {
+    position: absolute;
+    z-index: 3;
+    //display: none;
+    opacity: 0;
+    .css-transition(opacity, 0.4s);
 }
 
 /*login and register*/
@@ -180,4 +245,51 @@ header {
 
 .remember-login {
     margin-left: 70px;
+}
+
+/*postcard*/
+.comment-form {
+    textarea {
+        box-sizing: border-box;
+        width: 100%;
+        .img-bordered;
+    }
+    button {
+        float: right;
+    }
+}
+
+.postcard-comment {
+    padding: 20px 0 30px 0;
+    border-top: 1px dashed #cdcdcd;
+}
+.author {
+    height: 25px;
+    line-height: 25px;
+    //background-color: #f2fbf2;
+    time {
+        color: #787878;
+    }
+}
+.comment-content {
+    padding: 10px 0;
+}
+
+.overlay-background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: rgba(229,229,229,.8);
+    padding-top: 40px;
+}
+.choose-overlay {
+    width: 980px;
+    overflow: hidden;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px 10px 50px 10px;
+    .img-bordered;
 }

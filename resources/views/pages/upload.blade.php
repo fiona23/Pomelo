@@ -1,6 +1,7 @@
 @extends('_layouts.default')
 
 @section('content')
+<div class="content-wrapper">
 @if(Session::has('success'))
   <div class="alert-box success">
     <p>{!! Session::get('success') !!}</p>
@@ -19,6 +20,9 @@
     <a href="{{ url('upload') }}">取消</a>
   </form>
 @endif
+
+</div>
+
 @stop
 
 @section('jspath')

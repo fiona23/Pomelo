@@ -7,7 +7,7 @@ use Input;
 use Validator;
 use Redirect;
 use Session;
-use Auth, DB;
+use Auth, DB, File;
 use App\Postcard;
 use Illuminate\Support\Facades\Request;
 use Intervention\Image\ImageManager;
@@ -70,8 +70,14 @@ class UploadController extends Controller {
 			$extension = $file->getClientOriginalExtension();
 			$fileName =  'p'.round(microtime(true) * 1000).'.'.$extension;
 			$userName = Auth::user()->name;
-			$destinationPath = 'uploads/'.$userName;
-	 		$file->move($destinationPath, $fileName);
+			$path = 'uploads/natural/'.$userName;
+			$showpath = 'uploads/show/'.$userName;
+			$cutpath = 'uploads/cut/'.$userName;
+			if (!file_exists($showpath)) {
+				File::makeDirectory($showpath, 0755, true);
+				File::makeDirectory($cutpath, 0755, true);
+			}
+	 		$file->move($path, $fileName);
 	 	    Session::flash('success', 'Upload successfully');
 	 	    //记录这次一共上次了多少张图片
 	 	    Session::flash('count', $count);
@@ -79,12 +85,19 @@ class UploadController extends Controller {
 	 	    Session::flash('timestamp' , $timestamp);
 	 	    $postcard = new Postcard;
 	 	    $postcard->ownuser = $userName;
-	 	    $postcard->path = $destinationPath.'/'.$fileName;
+	 	    //大图
+	 	    $postcard->path = $path.'/'.$fileName;
 	 	    $postcard->timestamp = $timestamp;
+	 	    //普通显示
+	 	    $imgShow = Image::make($postcard->path);
+	 	    $imgShow->widen(600);
+	 	    $postcard->showpath = $showpath.'/'.$fileName;
+	 	    $imgShow->save($postcard->showpath);
+	 	    //截图
 	 	    $imgCut = Image::make($postcard->path);
 	 	    $imgCut->fit(168);
-	 	    $imgCut->save($destinationPath.'/cut'.$fileName);
-	 	    $postcard->cutpath = $destinationPath.'/cut'.$fileName;
+	 	    $postcard->cutpath = $cutpath.'/'.$fileName;
+	 	    $imgCut->save($postcard->cutpath);
 	 	    if ($postcard->save()) {
 	 	    		$img = view('_block.upload_block', ['src' => $postcard->cutpath])->render();
 	 	    		$obj = new \stdClass();

@@ -2,8 +2,10 @@
 
 
 @section('content')
-    <a href="{{ URL('upload') }}">发布明信片</a>
-    {!! $news !!}
+    <div class="content-wrapper">
+        <a href="{{ URL('upload') }}">发布明信片</a>
+        {!! $news !!}
+    </div>
 @stop
 
 @section('jspath')

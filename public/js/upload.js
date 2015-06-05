@@ -9,6 +9,7 @@
             contentType: false,
             processData: false,
             success: function (responseText) {
+                console.log(responseText)
                 var json = jQuery.parseJSON(responseText)
                 $('#uploaded-postcards').append(json.img)
                 $('#count').html('上传了'+json.count+'张明信片')

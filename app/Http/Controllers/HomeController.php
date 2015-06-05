@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 use Auth, DB;
 use Illuminate\Pagination\Paginator;
+use App\User;
+use App\News;
 class HomeController extends Controller {
 
 	/*
@@ -32,6 +34,7 @@ class HomeController extends Controller {
 	public function index()
 	{
 		$auth = Auth::user()->name;
+		$user = User::find($auth);
 		//得到当前登录用户的注册关注账户
 		$follows = DB::select('select user1 from followers
 							  where user2 = "'.$auth.'"');
@@ -42,13 +45,16 @@ class HomeController extends Controller {
 				array_push($followsArray, '"'.$follow->user1.'"');
 			}
 			$followsString = '('.implode(",", $followsArray).')';
-			//找到所有关注着的timestamp
+			//找到所有关注的人的timestamp
 			$timestamps = DB::select('select timestamps 
 									  from news 
 									  where news.name in '.$followsString);
 			
 			$allNews = '';
 			foreach ($timestamps as $timestamp) {
+				//得到当前新鲜事是谁发的
+				$name = DB::select('select name
+							from news where news.timestamps = '.$timestamp->timestamps);
 				$eachNews = '';
 				//找到每一条新鲜事对应的明信片
 				$news = DB::select('select path
@@ -58,7 +64,11 @@ class HomeController extends Controller {
 					$eachNews .= view('_block.news_block', ['news' => $new->path])->render();
 					
 				}
-				$allNews .= '<div class="status-item">'.$eachNews.'</div>';
+				$eachNews = '<a href="/people/'.$name[0]->name.'">'.$name[0]->name.'</a>'.$eachNews;
+				//新发的新鲜事放在前面
+				$allNews = '<div class="status-item">'
+						   .$eachNews
+						   .'</div>'.$allNews;
 			}
 			return view('home', ['title' => '柚子',
 								 'auth' => $auth,

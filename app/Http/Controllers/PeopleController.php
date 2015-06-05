@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Request;
 use DB;
 use Illuminate\Support\Facades\Session;
 use Auth;
+use App\Exchange, App\User;
+use App\Postcard;
 class PeopleController extends Controller {
 
 	/**
@@ -62,9 +64,8 @@ class PeopleController extends Controller {
 	public function show($id)
 	{	
 		$auth = Auth::user()->name;
-		$results = DB::select('select name from users
-								where name = :username',  ['username' => $id]);
-		if (!$results) {
+		$user = User::find($id);
+		if (!$user) {
 			return view('errors.404', ['title' => '404', 'auth' => $auth]);
 		} else {
 			$followResult = DB::select('select * from followers
@@ -78,15 +79,18 @@ class PeopleController extends Controller {
 				$class = 'follow-btn';
 			}
 
-			$postcards = DB::select('select cutpath from postcards
-										  where ownuser = "'.$id.'"');
-			$nickname = $results[0]->name;
+			$postcardsEx = Postcard::whereRaw('ownuser=? and status=?',[$id, 0])->get();
+			$postcardsWall = Postcard::whereRaw('getuser=? and status=?',[$id, 1])->get();			
+
 			return view('pages.people', ['auth' => $auth,
 										 'title' => $id,
-										 'nickname' => $nickname,
+										 'nickname' => $user->nickname,
 										 'btnHTML' => $btnHTML,
 										 'class' =>$class,
-										 'postcards' => $postcards]);
+										 'postcards' => $postcardsEx,
+										 'postcardsWall' => $postcardsWall
+										 // 'status' => $status,
+										 ]);
 		}
 	}
 

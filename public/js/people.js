@@ -1,6 +1,5 @@
 (function () {
 var btn = $('.sf-follow-btn').eq(0);
-
 btn.click(function () {
     var followBtn = $('.follow-btn').eq(0);
     var unfollowBtn = $('.unfollow-btn').eq(0);
@@ -29,7 +28,31 @@ btn.click(function () {
     }
 })
 
+var postWrapper = $('#postcard-wrapper');
+postWrapper.delegate('button', 'click', function (event) {
+    var text = $(this).html();
+    var status = text ==='我想换' ? '1' : '0';
+    text = text ==='我想换' ? '取消' : '我想换';
+    $(this).html(text);
+    $.ajax({
+        url: '/exchange/sure',
+        type: 'POST',
+        //contentType: 'application/json',
+        data: 'demand_user=' + $('.auth-link').eq(0).attr('data-auth') + '&postcard_id='+$(this).attr('data-postcard') +
+                               '&status =' + status,
+        // {
+        //     demand_user: $('.auth-link').eq(0)['data-auth'],
+        //     postcard_id: target.id
+        // },
+        success: function () {
+            
+        }
+    })
+})
+
+
 $.ajaxSetup({
         headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
     });
+
 })();
